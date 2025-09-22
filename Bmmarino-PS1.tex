@@ -1,44 +1,59 @@
 
 
-\section*{Examples I. Mathematical Preliminaries (due Sept 17)}
+\section*{Examples I. Mathematical Preliminaries (due Sept 19)}
 \label{PS1}
 
-This set of example problems is due on September 17, 2025. 
-I request that you type up your responses in \LaTeX~ rather than write them out by hand. 
-The primary reason is to become better acquainted with writing up mechanics in archival format. 
-If you have diagrams, plots, etc., please add them as attached figures using the \texttt{includegraphics} command. 
-
 \bigskip
-\subsection*{1--1. \textbf{Convolutional integrals} [4 pts].} The response of a 1D viscoelastic material to an applied forcing function is given using a convolutional integral:
+\subsection*{1--1. \textbf{Convolutional integrals} [4 pts].} 
+\subsubsection*{a: $\sigma_1(t) = \sigma_0 H(t)$}
+
 \begin{equation}
     \varepsilon(t) = \int_0^t J(t-\tau) \frac{d\sigma(\tau)}{d\tau} d\tau,
 \end{equation}
-where $\varepsilon(t)$ is the time-dependent strain response, $\sigma(t)$ is the prescribed stress function, and $J(t)$ is the material compliance, assumed to not depend on the level of stress applied. 
-Say we have a compliance function 
+subbing in the derivative of the Heaviside function for our stress:
 \begin{equation}
-    J(t) = J_\infty + (J_0-J_\infty)\exp[-t/\tau_c],
+    \varepsilon(t) = \int_0^t J(t-\tau) \sigma_0\delta(\tau) d\tau,
 \end{equation}
-where $J_0, J_\infty, \tau_c$ are all constants $\in \mathbbm{R}$. 
-We subject this material to two different loading profiles: (a) step load $\sigma_1(t) = \sigma_0 H(t)$ and (b) a sinusoidal load $\sigma_2(t) = \sigma_0  \sin(\omega t)$, where $\sigma_0$ and $\omega$ are also constant, and $H(t)$ is the step function. 
+Now, we can take the Laplace of this, noting that the Laplace transform of our dirac function is 1:
+\begin{equation}
+    \mathcal{L}\{\varepsilon(t)\} = \mathcal{J}(s)*\sigma_0
+\end{equation}
+where now, we can expand out our Laplace transforms
+\begin{equation}
+    \mathcal{L}\{\varepsilon(t)\}=\mathcal{J}(s) = \sigma_0\int_0^{\infty}e^{-st}J(t-\tau)dt 
+\end{equation}
+and further if wanted:
+\begin{equation}
+    \mathcal{L}\{\varepsilon(t)\}=\mathcal{J}(s) = \sigma_0\int_0^{\infty}e^{-st}(J_\infty + (J_0-J_\infty)e^{\frac{-t+\tau}{\tau_c}})dt 
+\end{equation}
 
-Determine the corresponding Laplace transforms of the strain functions $\mathcal{L}\{\varepsilon_1(t)\}$ and $\mathcal{L}\{\varepsilon_2(t)\}$. 
 
-\textit{\textbf{Dare mode:}} If you have taken complex analysis, you can compute the inverse transform of polynomial forms because this type of model yields terms with simple poles (i.e. linear in $s$). 
-The formulae for this (see e.g. \cite{rileyMathematicalMethodsPhysics2006} Chs. 24 and 25) are:
-\begin{equation*}
-    \textrm{Residue for simple poles: } R(f(s),s_0) = \lim\limits_{s\rightarrow s_0} \left[ (s-s_0) f(s) \right],
-\end{equation*}
-and you multiply each residue by the shift from zero, i.e.,
-\begin{equation*}
-    f(t) = \mathcal{L}^{-1}\{F(s)\} = \sum \left( \textrm{residues of } F(s)e^{s_0 t} \textrm{ at all poles } s_0 \right)
-\end{equation*}
-\textit{If you dare}, determine the corresponding strain histories $\varepsilon_1(t)$ and $\varepsilon_2(t)$. The first is relatively straightforward; the latter has complex poles and more terms. 
+\subsubsection*{b: $\sigma_2(t) = \sigma_0  \sin(\omega t)$}
+\begin{equation}
+    \varepsilon(t) = \int_0^t J(t-\tau) \frac{d\sigma(\tau)}{d\tau} d\tau,
+\end{equation}
+subbing in the derivative of the sine function for our stress:
+\begin{equation}
+    \varepsilon(t) = \int_0^t J(t-\tau) \sigma_0\omega\cos(\omega t) d\tau,
+\end{equation}
+taking the Laplace transform of this, with special note to transform the cosine function properly
+\begin{equation}
+    \mathcal{L}\{\varepsilon(t)\} = \mathcal{J}(s)*\sigma_0*\omega*\frac{s^2}{s^2+\omega^2}
+\end{equation}
+we can expand out as we did before:
+\begin{equation}
+    \mathcal{L}\{\varepsilon(t)\}=\mathcal{J}(s) = \sigma_0\omega\frac{s^2}{s^2+\omega^2}\int_0^{\infty}e^{-st}J(t-\tau)dt 
+\end{equation}
+\begin{equation}
+    \mathcal{L}\{\varepsilon(t)\}=\mathcal{J}(s) = sigma_0\omega\frac{s^2}{s^2+\omega^2}\int_0^{\infty}e^{-st}(J_\infty + (J_0-J_\infty)e^{\frac{-t+\tau}{\tau_c}})dt 
+\end{equation}
 
 %\newpage
 \bigskip
 \subsection*{1--2. \textbf{Index notation} [4 pts].} 
 
-\subsubsection*{P1: $\bm{p} \times (\bm{q} \times \bm{r}) = (\bm{r} \cdot \bm{p}) \bm{q} - (\bm{q} \cdot \bm{p}) \bm{r}$}
+
+\subsubsection*{a: $\bm{p} \times (\bm{q} \times \bm{r}) = (\bm{r} \cdot \bm{p}) \bm{q} - (\bm{q} \cdot \bm{p}) \bm{r}$}
 First, we convert into index notation
 \begin{equation}
     \epsilon_{ijk}\bm{p}_{i}(\epsilon_{jlm}\bm{q}_{l}\bm{r}_{m}) = (\bm{r}_i\bm{p}_i) \bm{q}_k - (\bm{q}_j\bm{p}_j) \bm{r}_k
@@ -59,96 +74,439 @@ finally, reordering and aligning indices gives us identical statements:
 \begin{equation}
     \boxed{\bm{r}_{i}\bm{p}_{i}\bm{q}_{k}-\bm{p}_{j}\bm{q}_{j}\bm{r}_{k} = \bm{r}_i\bm{p}_i \bm{q}_k - \bm{q}_j\bm{p}_j \bm{r}_k}
 \end{equation}
-\subsubsection*{P2: $(\bm{p} \times \bm{q}) \cdot (\bm{a} \times \bm{b}) = (\bm{p} \cdot \bm{a}) (\bm{q} \cdot \bm{b}) - (\bm{q} \cdot \bm{a})(\bm{p} \cdot \bm{b})$}
+
+
+
+\subsubsection*{b: $(\bm{p} \times \bm{q}) \cdot (\bm{a} \times \bm{b}) = (\bm{p} \cdot \bm{a}) (\bm{q} \cdot \bm{b}) - (\bm{q} \cdot \bm{a})(\bm{p} \cdot \bm{b})$}
 convert to index:
 \begin{equation}
     (\epsilon_{ijk}\bm{p}_j\bm{q}_k)(\epsilon_{ilm}\bm{a}_l\bm{b}_m) = (\bm{p}_i\bm{a}_i) (\bm{q}_j\bm{b}_j) - (\bm{q}_i\bm{a}_i)(\bm{p}_j\bm{b}_j)
 \end{equation}
-using alternator identities once again:
+reorganizing:
 \begin{equation}
     \epsilon_{ijk}\epsilon_{ilm}\bm{p}_j\bm{q}_k\bm{a}_l\bm{b}_m = (\bm{p}_i\bm{a}_i) (\bm{q}_j\bm{b}_j) - (\bm{q}_i\bm{a}_i)(\bm{p}_j\bm{b}_j)
 \end{equation}
+using alternator identities
+\begin{equation}
+    (\delta_{jl}\delta_{km}-\delta_{jm}\delta_{kl})\bm{p}_j\bm{q}_k\bm{a}_l\bm{b}_m= (\bm{p}_i\bm{a}_i) (\bm{q}_j\bm{b}_j) - (\bm{q}_i\bm{a}_i)(\bm{p}_j\bm{b}_j)
+\end{equation}
+carrying out those kronecker deltas
+\begin{equation}
+    \bm{p}_l\bm{q}_m\bm{a}_l\bm{b}_m-\bm{p}_m\bm{q}_l\bm{a}_l\bm{b}_m= (\bm{p}_i\bm{a}_i) (\bm{q}_j\bm{b}_j) - (\bm{q}_i\bm{a}_i)(\bm{p}_j\bm{b}_j)
+\end{equation}
+and reorganizing we get identical sides:
+\begin{equation}
+   \boxed{ \bm{p}_l\bm{a}_l\bm{q}_m\bm{b}_m-\bm{q}_l\bm{a}_l\bm{p}_m\bm{b}_m= \bm{p}_i\bm{a}_i\bm{q}_j\bm{b}_j - \bm{q}_i\bm{a}_i\bm{p}_j\bm{b}_j}
+\end{equation}
 
 
-\begin{itemize}
-    \item $\bm{p} \times (\bm{q} \times \bm{r}) = (\bm{r} \cdot \bm{p}) \bm{q} - (\bm{q} \cdot \bm{p}) \bm{r}$
-    \item $(\bm{p} \times \bm{q}) \cdot (\bm{a} \times \bm{b}) = (\bm{p} \cdot \bm{a}) (\bm{q} \cdot \bm{b}) - (\bm{q} \cdot \bm{a})(\bm{p} \cdot \bm{b})$
-    \item $(\bm{a} \otimes \bm{b})(\bm{p} \otimes \bm{q}) = \bm{a}\otimes\bm{q}(\bm{b} \cdot \bm{p}) $
-    \item $\bn{Q}^\intercal\bm{a} \cdot \bn{Q}^\intercal\bm{b} = \bm{a}\cdot\bm{b} $
-\end{itemize}
 
+\subsubsection*{c: $(\bm{a} \otimes \bm{b})(\bm{p} \otimes \bm{q}) = \bm{a}\otimes\bm{q}(\bm{b} \cdot \bm{p}) $}
+convert into index:
+\begin{equation}
+    \bm{a}_i\bm{b}_k\bm{p}_k \bm{q}_j = \bm{a}_i\bm{q}_j\bm{b}_k\bm{p}_k
+\end{equation}
+As long as you recognize that the LHS outer products must share an indices between them, rearrangement will get us to identical sides:
+\begin{equation}
+   \boxed{ \bm{a}_i\bm{q}_j\bm{b}_k\bm{p}_k  = \bm{a}_i\bm{q}_j\bm{b}_k\bm{p}_k}
+\end{equation}
+
+
+
+\subsubsection*{d: $\bn{Q}^\intercal\bm{a} \cdot \bn{Q}^\intercal\bm{b} = \bm{a}\cdot\bm{b} $}
+into index, where the upper notation dictates what basis frame we are in
+\begin{equation}
+    \bn{Q}^\intercal_{ij}\bm{a}_j^N \bn{Q}_{ij}^\intercal\bm{b}_j^N = \bm{a}_j^N\bm{b} _j^N
+\end{equation}
+evaluating our change of basis
+\begin{equation}
+   \boxed{ \bm{a}_i^B \bm{b}_i^B = \bm{a}_j^N\bm{b} _j^N}
+\end{equation}
+we see that the change of basis from N frame to B frame does not change the result of the dot product.
+
+\bigskip
 \subsection*{1--3. \textbf{Tensors and vectors} [4 pts].}
-First, lets define u vector based on the definitions
 \begin{equation}
-    \bm{u}=\bm{u}_{\perp}+\bm{u}_{||}
+    \bm{u} = (\bm{u} \cdot \bm{n}) \bm{n} + \bm{n} \times (\bm{u} \times \bm{n} )
 \end{equation}
-subbing our definitions
+first, lets convert into index:
 \begin{equation}
-    \bm{u}=(\bn{I} - \bm{n} \otimes \bm{n}) \bm{u}+(\bm{u} \cdot \bm{n}) \otimes \bm{n}
+    \bm{u}_i = \bm{u}_j\bm{n}_j\bm{n}_i+\epsilon_{ijk}\bm{n}_j\epsilon_{klm}\bm{u}_l\bm{n}_m
 \end{equation}
-turning into index...
+expanding out based on our identities:
 \begin{equation}
-    \bm{u}_i = (\bn{I}_{ij} - \bm{n}_{i}\bm{n}_j) \bm{u}_j++(\bm{u}_j \bm{n}_j)\bm{n}_i
+    \bm{u}_i = \bm{u}_j\bm{n}_j\bm{n}_i+(\delta_{il}\delta_{jm}-\delta_{im}\delta_{lj})\bm{n}_j\bm{u}_l\bm{n}_m
 \end{equation}
-
-The second-order projection tensors $\bn{P}_{\bm{n}}^{||}$ and $\bn{P}_{\bm{n}}^{\perp}$ are useful operators that take a vector $\bm{u}$ and map that vector to its part parallel and perpendicular to a vector $\bm{n}$, respectively. 
-
-They are defined via:
-\begin{equation*}
-    \bm{u}_{||} = (\bm{u} \cdot \bm{n}) \otimes \bm{n} = (\bm{n} \otimes \bm{n}) \bm{u} = \bn{P}_{\bm{n}}^{||} \bm{u},
-\end{equation*}
-\begin{equation*}
-    \bm{u}_{\perp} = \bm{u} - \bm{u}_{||} = (\bn{I} - \bm{n} \otimes \bm{n}) \bm{u} = \bn{P}_{\bm{n}}^{\perp} \bm{u}.
-\end{equation*}
-
-The projection tensors have properties
-\begin{align*}
-    \bn{P}_{\bm{n}}^{||} + \bn{P}_{\bm{n}}^{\perp} &= \bn{I} \\
-    \left(\bn{P}_{\bm{n}}^{||} \right)^m &= \bn{P}_{\bm{n}}^{||} ~\forall ~m \in \mathbbm{Z}^+\\
-    \left(\bn{P}_{\bm{n}}^{\perp} \right)^m &= \bn{P}_{\bm{n}}^{\perp} ~\forall ~m \in \mathbbm{Z}^+\\
-    \bn{P}_{\bm{n}}^{||} \bn{P}_{\bm{n}}^{\perp} = \bn{P}_{\bm{n}}^{\perp} \bn{P}_{\bm{n}}^{||}  &= \bn{0}
-\end{align*}
-
-Using the projection tensors, show that $\bm{u} = (\bm{u} \cdot \bm{n}) \bm{n} + \bm{n} \times (\bm{u} \times \bm{n} )$.
+\begin{equation}
+    \bm{u}_i = \bm{u}_j\bm{n}_j\bm{n}_i+\bm{n}_j\bm{u}_i\bm{n}_j-\bm{n}_j\bm{u}_j\bm{n}_i
+\end{equation}
+cancelling
+\begin{equation}
+    \bm{u}_i = \bm{n}_j\bm{u}_i\bm{n}_j
+\end{equation}
+finally, we have the two direction vectors dotted together, and then the u vector. since these are unit direction, they go to 1.
+\begin{equation}
+    \boxed{\bm{u}_i = \bm{u}_i}
+\end{equation}
+Yes, I know this technically isnt using the projection vectors. I couldnt figure it out, I plan to investigate when I have more time.
 
 \bigskip
 \subsection*{1--4. \textbf{Vector and tensor calculus} [4 pts].} 
-\subsubsection*{P1: $\gradX \times (\phi \bm{a}) = \phi \gradX \times \bm{a} + (\gradX\phi) \times \bm{a}$}
-converting 
+\subsubsection*{a: $\gradX \times (\phi \bm{a}) = \phi \gradX \times \bm{a} + (\gradX\phi) \times \bm{a}$}
+converting into index
+\begin{equation}
+    \epsilon_{ijk}\frac{d}{dx_j}\phi \bm{a}_k = \phi\epsilon_{ijk}\frac{d}{dx_j} \bm{a}_k+\epsilon_{ijk}\frac{d\phi}{dx_j} \bm{a}_k
+\end{equation}
+evaluating further
+\begin{equation}
+    \epsilon_{ijk}(\phi\bm{a}_k)_{,j} = \phi\epsilon_{ijk}\bm{a}_{k,j}+\epsilon_{ijk}\phi_{,j}\bm{a}_k
+\end{equation}
+'canceling' out the epsilons 
+\begin{equation}
+    (\phi\bm{a}_k)_{,j} = \phi\bm{a}_{k,j}+\phi_{,j}\bm{a}_k
+\end{equation}
+we can see that this is simply the product rule
+\begin{equation}
+    \boxed{\phi\bm{a}_{k,j}+\phi_{,j}\bm{a}_k = \phi\bm{a}_{k,j}+\phi_{,j}\bm{a}_k}
+\end{equation}
 
-\begin{itemize}
-    \item $\gradX \times (\phi \bm{a}) = \phi \gradX \times \bm{a} + (\gradX\phi) \times \bm{a}$
-    \item $\gradX (\bm{a} \cdot \bm{b}) = (\bm{a} \cdot \gradX) \bm{b} + (\bm{b} \cdot \gradX) \bm{a} + \bm{a} \times (\gradX \times \bm{b}) + \bm{b} \times (\gradX \times \bm{a})$
-    \item $ (\bn{A} \bn{B}) \bn{:} \bn{C} = (\bn{A}^\intercal \bn{C})\bn{:} \bn{B} = (\bn{C} \bn{B}^\intercal)\bn{:} \bn{A}$
-    \item Let $J = \det \bn{F}$. Show\footnote{It will help to use the expression for the determinant of a tensor in index notation!} that $\frac{\partial J}{\partial \bn{F}} = J \bn{F}^{-\intercal}$. 
-    \end{itemize}
+\subsubsection*{b: $\gradX (\bm{a} \cdot \bm{b}) = (\bm{a} \cdot \gradX) \bm{b} + (\bm{b} \cdot \gradX) \bm{a} + \bm{a} \times (\gradX \times \bm{b}) + \bm{b} \times (\gradX \times \bm{a})$}
+converying into index...
+\begin{equation}
+    \frac{d}{dx}_i\bm{a}_j\bm{b}_j = (\bm{a}_j\frac{d}{dx}_j)\bm{b}_i+(\bm{b}_j\frac{d}{dx}_j)\bm{a}_i +\epsilon_{ijk}\bm{a}_j\epsilon_{klm}\frac{d}{dx}_l\bm{b}_m+\epsilon_{ijk}\bm{b}_j\epsilon_{klm}\frac{d}{dx}_l\bm{a}_m
+\end{equation}
+simplifying and using alternator equalities
+\begin{equation}
+    (\bm{a}_j\bm{b}_j)_{,i} = \bm{a}_{j,j}\bm{b}_i+\bm{b}_{j,j}\bm{a}_i+(\delta_{il}\delta_{jm}-\delta_{im}\delta_{jl})\bm{a}_j\bm{b}_{m,l}+(\delta_{il}\delta_{jm}-\delta_{im}\delta_{jl})\bm{b}_j\bm{a}_{m,l}
+\end{equation}
+carrying out our kronecker deltas
+\begin{equation}
+    (\bm{a}_j\bm{b}_j)_{,i} = \bm{a}_{j,j}\bm{b}_i+\bm{b}_{j,j}\bm{a}_i+\bm{a}_j\bm{b}_{j,i}-\bm{a}_j\bm{b}_{i,j}+\bm{b}_j\bm{a}_{j,i}-\bm{b}_j\bm{a}_{i,j}
+\end{equation}
+so, looking back at this, it is worth noting that we could have applied the derivative to either $\bm{a}_j$ or $\bm{b}_i$, which can be seen here:
+\begin{equation}
+    (\bm{a}_j\frac{d}{dx}_j)\bm{b}_i =  \bm{a}_{j,j}\bm{b}_i =  \bm{a}_{j}\bm{b}_{i,j}
+\end{equation}
+following this, we can cancel some terms:
+\begin{equation}
+    \boxed{(\bm{a}_j\bm{b}_j)_{,i} = \bm{a}_j\bm{b}_{j,i}+\bm{b}_j\bm{a}_{j,i}}
+\end{equation}
+which we see is now just the product rule, once again!
+
+\subsubsection*{c: $ (\bn{A} \bn{B}) \bn{:} \bn{C} = (\bn{A}^\intercal \bn{C})\bn{:} \bn{B} = (\bn{C} \bn{B}^\intercal)\bn{:} \bn{A}$}
+First, convert into index notation, while making sure to keep the indices on each variable the same:
+\begin{equation}
+    \bn{A}_{ik} \bn{B}_{kj}\bn{C}_{ij} = \bn{A}_{ik}^T\bn{C}_{ij}\bn{B}_{kj} = \bn{C}_{ij}\bn{B}_{kj}^T\bn{A}_{ik}
+\end{equation}
+so now, evaluating our transposes:
+\begin{equation}
+    \boxed{\bn{A}_{ik} \bn{B}_{kj}\bn{C}_{ij} = \bn{A}_{ki}\bn{C}_{ij}\bn{B}_{kj} = \bn{C}_{ij}\bn{B}_{jk}\bn{A}_{ik}}
+\end{equation}
+and with that we see that all of these collapse the same way and result in a single scalar.
+
+
+\subsubsection*{d:$\frac{\partial J}{\partial \bn{F}} = J \bn{F}^{-\intercal}$}
+starting with our definitions of the determinant in index form:
+\begin{equation}
+    \bn{J} = \det\bn{F} = \frac{1}{6}\epsilon_{ijk}\epsilon_{pqr}\bn{F}_{ip}\bn{F}_{jq}\bn{F}_{kr}
+\end{equation}
+taking our derivative with respect to F
+\begin{equation}
+    \frac{dJ}{d\bn{F}_{lm}} = \frac{1}{6}\epsilon_{ijk}\epsilon_{pqr}\frac{d}{d\bn{F}_{lm}}(\bn{F}_{ip}\bn{F}_{jq}\bn{F}_{kr})
+\end{equation}
+following product rule:
+\begin{equation}
+    \frac{dJ}{d\bn{F}_{lm}} = \frac{1}{6}\epsilon_{ijk}\epsilon_{pqr}(\frac{d\bn{F}_{ip}}{d\bn{F}_{lm}}\bn{F}_{jq}\bn{F}_{kr}+\bn{F}_{ip}\frac{d\bn{F}_{jq}}{d\bn{F}_{lm}}\bn{F}_{kr}+\bn{F}_{ip}\bn{F}_{jq}\frac{d\bn{F}_{kr}}{d\bn{F}_{lm}})
+\end{equation}
+all the derivatives turn into kronecker deltas:
+\begin{equation}
+    \frac{dJ}{d\bn{F}_{lm}} = \frac{1}{6}\epsilon_{ijk}\epsilon_{pqr}(\delta_{il}\delta_{pm}\bn{F}_{jq}\bn{F}_{kr}+\bn{F}_{ip}\delta_{jl}\delta_{qm}\bn{F}_{kr}+\bn{F}_{ip}\bn{F}_{jq}\delta_{kl}\delta_{rm})
+\end{equation}
+which, expanding and carrying out kronecker deltas:
+\begin{equation}
+    \frac{dJ}{d\bn{F}_{lm}} = \frac{1}{6}\epsilon_{ljk}\epsilon_{mqr}\bn{F}_{jq}\bn{F}_{kr}+\frac{1}{6}\epsilon_{ilk}\epsilon_{pmr}\bn{F}_{ip}\bn{F}_{kr}+\frac{1}{6}\epsilon_{ijl}\epsilon_{pqm}\bn{F}_{ip}\bn{F}_{jq}
+\end{equation}
+now rearranging the alternators and the signs appropriately (so they are 'identical'):
+\begin{equation}
+    \frac{dJ}{d\bn{F}_{lm}} = \frac{1}{6}\epsilon_{jkl}\epsilon_{qrm}\bn{F}_{jq}\bn{F}_{kr}-\frac{1}{6}\epsilon_{ikl}\epsilon_{prm}\bn{F}_{ip}\bn{F}_{kr}+\frac{1}{6}\epsilon_{ijl}\epsilon_{pqm}\bn{F}_{ip}\bn{F}_{jq}
+\end{equation}
+so, lets 'complete' these alternators by extracting an F
+\begin{equation}
+    \frac{dJ}{d\bn{F}_{lm}} = (\frac{1}{6}\epsilon_{jkl}\epsilon_{qrm}\bn{F}_{jq}\bn{F}_{kr}\bn{F}_{lm}-\frac{1}{6}\epsilon_{ikl}\epsilon_{prm}\bn{F}_{ip}\bn{F}_{kr}\bn{F}_{lm}+\frac{1}{6}\epsilon_{ijl}\epsilon_{pqm}\bn{F}_{ip}\bn{F}_{jq}\bn{F}_{lm})\bn{F}^{-T}_{ml}
+\end{equation}
+with that, two of these cancel...
+\begin{equation}
+    \frac{dJ}{d\bn{F}_{lm}} = (\frac{1}{6}\epsilon_{jkl}\epsilon_{qrm}\bn{F}_{jq}\bn{F}_{kr}\bn{F}_{lm})\bn{F}^{-T}_{ml}
+\end{equation}
+which now, this converts back into our determinant:
+\begin{equation}
+    \frac{dJ}{d\bn{F}_{lm}} = \det(F)F^{-T}_{ml}
+\end{equation}
+and thus:
+\begin{equation}
+    \boxed{\frac{dJ}{d\bn{F}_{lm}} = J \bn{F}^{-T}_{ml}}
+\end{equation}
 
 %\newpage
 \bigskip
-\subsection*{1--5. \textbf{Kinematics} [8 pts].} The Happy Gelatinous Cube (HGC, pictued) $\mathcal{G}$ exists on a domain of $\{-1\leq X_1 , X_3\leq1, 0\leq X_2 \leq 2\}$ at initial time $t=0$. 
-At all times, the bottom surface of the HGC does not move. 
-Its top surface moves sinusoidally in time at frequency $\omega$ by a maximum magnitude of $\alpha$. 
-At maximum compression, points in the centers of the surfaces defined by outward normals $\bm{e}_1$ and $\bm{e}_3$ experience maximum displacements of magnitude $\beta$. 
+\subsection*{1--5. \textbf{Kinematics} [8 pts].} 
+\subsubsection*{a: Deformation Gradient Tensor}
+First to derive the deformation gradient tensor, we must find our vector field. 
+\begin{equation}
+    \bn{F} = \gradX  \bm{x}
+\end{equation}
+where
+\begin{equation}
+    \bm{x} = \bm{u} + \bm{X}
+\end{equation}
+in our case, we assume that our maximum magnitudes of displacement $\alpha$ and $\beta$, occur at the same time, in opposite directions. For example, when the GHC stretches in the e2 direction by magnitude $\alpha$, the GHC contracts by $\beta$ in the e1 and e3 directions. This behavior also occurs in opposite, where the e2 direction contracts and then the e1 and e3 directions bow out by the same parameters. we assume this behavior will alternate at our frequency $\omega$. It is worth noting that since our upper and lower surfaces are fixed, that the e1 and e3 directions must contain some feature to dampen the displacement effects as you near those planes. Now with our assumptions out of the way, we can proceed in developing our vector field
+\begin{gather}
+\begin{bmatrix}
+    x_1 \\
+    x_2 \\
+    x_3 \\
+\end{bmatrix}=
+\begin{bmatrix}
+    X_1+X_1\beta\sin(\omega t)(X_2^2-2X_2)\\
+    X_2+\frac{X_2}{2}\alpha\sin(\omega t)\\
+    X_3+X_3\beta\sin(\omega t)(X_2^2-2X_2)\\
+\end{bmatrix}
+\end{gather}
+now we can take the gradient and get our deformation gradient tensor
+\begin{gather}
+\boxed{
+\bn{F} =
+    \begin{bmatrix}
+        1+\beta\sin(\omega t)(X_2^2-2X_2) && X_1\beta\sin(\omega t)(2X_2-2) && 0\\
+        0 && 1 + \frac{1}{2}\alpha\sin(\omega t) && 0 \\
+        0 && +X_3\beta\sin(\omega t)(1X_2-2) && 1+\beta\sin(\omega t)(X_2^2-2X_2)
+    \end{bmatrix}}
+\end{gather}
+\subsubsection*{b: stretch magnitude}
+first, lets plug in the given location of $X_2$ = 1 into our deformation gradient tensor
+\begin{gather}
+\bn{F} =
+    \begin{bmatrix}
+        1-\beta\sin(\omega t) && 0 && 0\\
+        0 && 1 + \frac{1}{2}\alpha\sin(\omega t) && 0 \\
+        0 && 0 && 1-\beta\sin(\omega t)
+    \end{bmatrix}
+\end{gather}
+next to find our stretch, we need the Right Cauchy Green Tensor:
+\begin{gather}
+\bn{C} = \bn{F}^T\bn{F}
+    \begin{bmatrix}
+        1-\beta\sin(\omega t) && 0 && 0\\
+        0 && 1 + \frac{1}{2}\alpha\sin(\omega t) && 0 \\
+        0 && 0 && 1-\beta\sin(\omega t)
+    \end{bmatrix}
+     \begin{bmatrix}
+        1-\beta\sin(\omega t) && 0 && 0\\
+        0 && 1 + \frac{1}{2}\alpha\sin(\omega t) && 0 \\
+        0 && 0 && 1-\beta\sin(\omega t)
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        (1-\beta\sin(\omega t))^2 && 0 && 0\\
+        0 && (1 + \frac{1}{2}\alpha\sin(\omega t))^2 && 0 \\
+        0 && 0 && (1-\beta\sin(\omega t))^2
+    \end{bmatrix}
+\end{gather}
+the equation for stretch follows as such:
+\begin{equation}
+    \lambda = \sqrt{\hat{n}\cdot\bn{C}\hat{n}}
+\end{equation}
+where n is the direction of lengthening. Now, for an angle theta in the e1-e2 plane, this n vector would look like this:
+\begin{gather}
+\hat{n}_{e1-e2} = 
+    \begin{bmatrix}
+        \cos(\theta) \\
+        \sin(\theta) \\
+        0
+    \end{bmatrix}
+\end{gather}
+and in the e1-e3 plane
+\begin{gather}
+\hat{n}_{e1-e3} = 
+    \begin{bmatrix}
+        \cos(\theta) \\
+        0 \\
+        \sin(\theta)
+    \end{bmatrix}
+\end{gather}
+So now with this, we can follow the equation given prior and find our stretch magnitude in the respective planes:
+\begin{gather}
+    \lambda_{e1-e2} = 
+    \sqrt{\begin{bmatrix}
+        \cos(\theta) && \sin(\theta) && 0 
+    \end{bmatrix}
+    \begin{bmatrix}
+         (1-\beta\sin(\omega t))^2 && 0 && 0\\
+        0 && (1 + \frac{1}{2}\alpha\sin(\omega t))^2 && 0 \\
+        0 && 0 && (1-\beta\sin(\omega t))^2
+    \end{bmatrix}
+     \begin{bmatrix}
+        \cos(\theta) \\
+        \sin(\theta) \\
+        0
+    \end{bmatrix}}
+\end{gather}
+\begin{gather}
+    \lambda_{e1-e3} = 
+    \sqrt{\begin{bmatrix}
+        \cos(\theta) && 0&& \sin(\theta)  
+    \end{bmatrix}
+    \begin{bmatrix}
+         (1-\beta\sin(\omega t))^2 && 0 && 0\\
+        0 && (1 + \frac{1}{2}\alpha\sin(\omega t))^2 && 0 \\
+        0 && 0 && (1-\beta\sin(\omega t))^2
+    \end{bmatrix}
+     \begin{bmatrix}
+        \cos(\theta) \\
+        0\\
+        \sin(\theta) \\
+    \end{bmatrix}}
+\end{gather}
+these simplify down to our magnitudes:
+\begin{equation}
+     \boxed{\lambda_{e1-e2} = \sqrt{\cos(\theta)^2(1-\beta\sin(\omega t))^2+\sin(\theta)^2(1 + \frac{1}{2}\alpha\sin(\omega t))^2}}
+\end{equation}
+\begin{equation}
+     \lambda_{e1-e3} = \sqrt{\cos(\theta)^2(1-\beta\sin(\omega t))^2+\sin(\theta)^2(1-\beta\sin(\omega t))^2}
+\end{equation}
+we can simplify the e1-e3 further using trig identies:
+\begin{equation}
+    \boxed{\lambda_{e1-e3} = 1-\beta\sin(\omega t)}
+\end{equation}
+\subsubsection*{c: LG-Strain \& Material Log Strain}
+first, lets define the geometric center of the HGC
+\begin{gather}
+    \bm{X}_c = 
+    \begin{bmatrix}
+        0&&1&&0
+    \end{bmatrix}
+\end{gather}
+so taking our deformation gradient tensor from the previous part, and plugging in our location:
+\begin{gather}
+    \bn{F} = 
+    \begin{bmatrix}
+         1-\beta\sin(\omega t) && 0 && 0\\
+        0 && 1 + \frac{1}{2}\alpha\sin(\omega t) && 0 \\
+        0 && 0 && 1-\beta\sin(\omega t)
+    \end{bmatrix}
+\end{gather}
+from this we find our right cauchy green tensor and our right stretch tensor
+\begin{gather}
+    \bn{C} = 
+    \begin{bmatrix}
+        (1-\beta\sin(\omega t))^2 && 0 && 0\\
+        0 && (1 + \frac{1}{2}\alpha\sin(\omega t))^2 && 0 \\
+        0 && 0 && (1-\beta\sin(\omega t))^2
+    \end{bmatrix}
+\end{gather}
+\begin{gather}
+    \bn{U} = 
+    \begin{bmatrix}
+         1-\beta\sin(\omega t) && 0 && 0\\
+        0 && 1 + \frac{1}{2}\alpha\sin(\omega t) && 0 \\
+        0 && 0 && 1-\beta\sin(\omega t)
+    \end{bmatrix}
+\end{gather}
+now calculating our respective strains:
+\begin{equation}
+    \bn{E} = \frac{1}{2}(\bn{C}-\bn{I})
+\end{equation}
+\begin{equation}
+    \bn{E}_H = \ln(\bn{U})
+\end{equation}
+filling out:
+\begin{gather}
+    \bn{E} = 
+    \begin{bmatrix}
+        -\beta\sin(\omega t)+\frac{1}{2}(\beta\sin(\omega t))^2 && 0 && 0 \\
+        0 && \frac{1}{2}\alpha\sin(\omega t)+\frac{1}{8}(\alpha\sin(\omega t))^2 && 0 \\
+          0 && 0 && -\beta\sin(\omega t)+\frac{1}{2}(\beta\sin(\omega t))^2\\
+    \end{bmatrix}
+\end{gather}
+\begin{gather}
+    \bn{E}_H = 
+    \begin{bmatrix}
+         \ln(1-\beta\sin(\omega t)) && 0 && 0\\
+        0 && \ln(1 + \frac{1}{2}\alpha\sin(\omega t)) && 0 \\
+        0 && 0 && \ln(1-\beta\sin(\omega t))
+    \end{bmatrix}
+\end{gather}
+so with these, we can now identify the max and min strains of each:
+\begin{gather}
+   \boxed{ E_i(t)_{max} = 
+\begin{bmatrix}
+    \beta+\frac{1}{2}\beta^2 \\
+    \frac{1}{2}\alpha+ \frac{1}{8}\alpha^2 \\
+    \beta+\frac{1}{2}\beta^2 \\
+\end{bmatrix}}
+,
+ \boxed{E_i(t)_{min} = 
+\begin{bmatrix}
+    -\beta+\frac{1}{2}\beta^2 \\
+    -\frac{1}{2}\alpha+ \frac{1}{8}\alpha^2 \\
+    -\beta+\frac{1}{2}\beta^2
+\end{bmatrix}}
+\end{gather}
+\begin{gather}
+   \boxed{ E_{H,i}(t)_{max} = 
+\begin{bmatrix}
+    \ln(1+\beta)\\
+    \ln(1+\frac{1}{2}\alpha) \\
+    \ln(1+\beta)\\
+\end{bmatrix}}
+,
+ \boxed{E_{H,i}(t)_{min} = 
+\begin{bmatrix}
+    \ln(1-\beta)\\
+    \ln(1-\frac{1}{2}\alpha) \\
+    \ln(1-\beta)\\
+\end{bmatrix}}
+\end{gather}
+\subsubsection*{d: Material Acceleration}
+so, to find our point acceleration, we go back to the vector field
+\begin{gather}
+\begin{bmatrix}
+    x_1 \\
+    x_2 \\
+    x_3 \\
+\end{bmatrix}=
+\begin{bmatrix}
+    X_1+X_1\beta\sin(\omega t)(X_2^2-2X_2)\\
+    X_2+\frac{X_2}{2}\alpha\sin(\omega t)\\
+    X_3+X_3\beta\sin(\omega t)(X_2^2-2X_2)\\
+\end{bmatrix}
+\end{gather}
+so, lets plug in our point, so this becomes purely a function of time:
+\begin{gather}
+\bm{x}=
+\begin{bmatrix}
+    0\\
+    2+\alpha\sin(\omega t)\\
+    0\\
+\end{bmatrix}
+\end{gather}
+taking first time derivative:
+\begin{gather}
+\bm{v}=
+\begin{bmatrix}
+    0\\
+    \alpha\omega\cos(\omega t)\\
+    0\\
+\end{bmatrix}
+\end{gather}
+and again
+\begin{gather}
+\boxed{\bm{A}=
+\begin{bmatrix}
+    0\\
+    -\alpha\omega^2\sin(\omega t)\\
+    0\\
+\end{bmatrix}}
+\end{gather}
+this makes sense, as the upper surface is fixed, thus there would be no acceleration in the e1 or e3 direction.
 
-\medskip
-(a) Determine the deformation gradient tensor $[\bn{F}(\bm{X})]^{\bm{e}}$ for all $\bm{X}\in \mathcal{G}$. 
-Describe any assumptions you make about the shape of the HGC as it deforms. 
-
-\medskip
-(b) Determine the stretch magnitude of a small fiber positioned at a height $X_2 = 1$ and oriented at an angle $\theta$ from the $\bm{e}_1$ axis. 
-
-\medskip
-(c) Determine the Lagrange-Green strain tensor $\bn{E}$ and the material logarithmic strain tensor $\bn{E}_H = \ln (\bn{U})$ for the geometric center $\bm{X}_c$ of the HGC\footnote{Note that the log of a tensor is defined by writing it spectrally and replacing each eigenvalue with the log of that eigenvalue. For a case of no shear/off-diagonal terms, you can just take the log of each element on the diagonal to get $\ln(\bn{U})$.}. 
-What are the maximum and minimum values of the strain eigenvalues $E_i(t)$ and $E_i^H(t)$? 
-Would you expect one set to be more symmetric about zero as $\alpha$ gets large, and why?
-
-\medskip
-(d) Determine both the material point acceleration $\bm{A}(\bm{X}_1)$ at, and spatial acceleration $\bm{a}(\bm{x}_1)$ of material moving through, a point $\frac{1}{2} \bm{e}_1 + 2\bm{e}_2 + \frac{1}{2} \bm{e}_3$.  
-
-\begin{figure}
-\centering
-\animategraphics[loop,autoplay,width=4in]{10}{instr-figures/The_Happy_Gelatinous_Cube-}{1}{10}
-\end{figure}
-
-% This is a placeholder for the example problems from the first problem set. 
-% You'll replace this file with the one I supply on canvas. 
