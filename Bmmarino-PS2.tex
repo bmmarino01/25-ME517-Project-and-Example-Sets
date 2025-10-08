@@ -1,0 +1,323 @@
+\setcounter{section}{1} % This causes the next section to be Appendix B
+
+\section{Kinetics, Constitutive Laws, and Viscoelasticity I}
+\label{PS2}
+
+This set of example problems is due on October 3, 2025. 
+As before, I request that you type up your responses in \LaTeX~ rather than write them out by hand. 
+
+\medskip
+\subsection*{2--1. \textbf{Balance of mass} [4 pts].} 
+First, starting with our mass balance equation in index notation:
+\begin{equation}
+    \frac{d\rho}{dt}+\frac{d}{dx_i}(\rho v_i)
+\end{equation}
+expanding:
+\begin{equation}
+    \frac{d\rho}{dt}+\frac{d\rho}{dx_i}v_i+\frac{dv_i}{dx_i}\rho
+\end{equation}
+now, converting to polar, we note:
+\begin{equation}
+    \frac{d}{d\bm{x}} = \{\frac{d}{dr},\frac{1}{r}\frac{d}{d\theta},\frac{d}{dz}\}
+\end{equation}
+and plugging in (all values now in polar)
+\begin{equation}
+    \frac{d\rho}{dt}+(\frac{d\rho}{dr}r+r\frac{d\rho}{d\theta}+\frac{d\rho}{dz})v_rr+r(\frac{dv_r}{dr}\frac{1}{r}+\frac{1}{r}\frac{dv_r}{d\theta}+\frac{dv_r}{dz})\rho+v_r(\frac{dr}{dr}\frac{1}{r}+\frac{1}{r}\frac{dr}{d\theta}+\frac{dr}{dz})\rho
+\end{equation}
+canceling out the portions that are zero:
+\begin{equation}
+    \frac{d\rho}{dt}+(\frac{d\rho}{dr}r)v_rr+r(\frac{dv_r}{dr}\frac{1}{r})\rho+v_r(\frac{dr}{dr}\frac{1}{r})\rho
+\end{equation}
+final simplifications 
+\begin{equation}
+    \boxed{\rho_{,t}+\rho_{,r}v_r+\rho v_{r,r}+\frac{\rho}{r}v_r = 0 }
+\end{equation}
+which has been satisfied (this was also a problem in 511). now we will show the incompressibility assumption:
+\begin{equation}
+    \rho v_{r,r}+\frac{\rho}{r}v_r = 0
+\end{equation}
+\begin{equation}
+    \rho \frac{dv_r}{dr}+\frac{\rho}{r}v_r = 0
+\end{equation}
+seperating sides:
+\begin{equation}
+    \frac{1}{v_r}dv_r = - \frac{1}{r}dr
+\end{equation}
+taking integral:
+\begin{equation}
+    \int_{\dot{R}}^{v}\frac{1}{v_r}dv_r = \int_r^R-\frac{1}{r}dr
+\end{equation}
+\begin{equation}
+    \ln(\frac{v}{\dot{R}}) = - \ln(\frac{r}{R}) 
+\end{equation}
+convering outta the logs:
+\begin{equation}
+    \frac{v}{\dot{R}} = \frac{R}{r}
+\end{equation}
+so, as defined in the definition, we have to convert our velocities into polar velocities:
+\begin{equation}
+     \frac{v_rr}{\dot{RR}} = \frac{R}{r}
+\end{equation}
+reorienting:
+\begin{equation}
+    \boxed{v_r = \frac{R^2\dot{R}}{r^2}}
+\end{equation}
+
+
+\medskip
+\subsection*{2--2. \textbf{Balance of momenta} [4 pts].} 
+First starting with the Force balance:
+\begin{equation}
+    \int_{d\Omega_t}\bm{t}dA+\int_{\Omega_t}\bm{b}dV = \int_{\Omega_t}\rho \bm{a}dV
+\end{equation}
+where subbing in our traction and body force...
+\begin{equation}
+    \int_{d\Omega_t}-\rho_w g x_3 \hat{\bm{n}}dA+\int_{\Omega_t} (\frac{1}{2}+\frac{x_2+R}{2R})\rho_w g \hat{e}_3  dV = \int_{\Omega_t}\rho \bm{a}dV
+\end{equation}
+using divergence thrm
+\begin{equation}
+    \int_{\Omega_t}\nabla_x\cdot(-\rho_w g x_3) dV+\int_{\Omega_t} (\frac{1}{2}+\frac{x_2+R}{2R})\rho_w g \hat{e}_3  dV = \int_{\Omega_t}\rho \bm{a}dV
+\end{equation}
+\begin{equation}
+    \int_{\Omega_t}-\rho_w g\hat{e}_3 dV+\int_{\Omega_t} (\frac{1}{2}+\frac{x_2+R}{2R})\rho_w g \hat{e}_3  dV = \int_{\Omega_t}\rho \bm{a}dV
+\end{equation}
+taking integrals:
+\begin{equation}
+    -\rho_w gV_{\Omega_t}\hat{e}_3 + (\frac{1}{2}V_{\Omega_t}+x_1x_2\frac{x_2^2/2+R}{2R})\rho_w g \hat{e}_3 = \rho \bm{a} V_{\Omega_t}
+\end{equation}
+\begin{equation}
+    m\bm{a} = (0)\hat{e}_1 + (0)\hat{e}_2 + ((\frac{1}{2}V_{\Omega_t}+x_1x_2\frac{x_2^2/2+R}{2R})\rho_w g-\rho_w gV_{\Omega_t})\hat{e}_3
+\end{equation}
+simplifying
+\begin{equation}
+    \boxed{\bm{F} = (0)\hat{e}_1 + (0)\hat{e}_2 + (x_1x_2\frac{x_2^2/2+R}{2R})-\frac{1}{2}V_{\Omega_t})\rho_w g\hat{e}_3}
+\end{equation}
+Now for moment balance:
+\begin{equation}
+    \int_{d\Omega_t}\bm{x}\times\bm{t}dA+\int_{\Omega_t}\bm{x}\times\bm{b}dV = \int_{\Omega_t}\bm{x}\times\rho \bm{a}dV
+\end{equation}
+subbing in our known expressions:
+\begin{equation}
+    \int_{d\Omega_t}\bm{x}\times-\rho_w g x_3 \hat{\bm{n}}dA+\int_{\Omega_t}\bm{x}\times(\frac{1}{2}+\frac{x_2+R}{2R})\rho_w g \hat{e}_3dV = \int_{\Omega_t}\bm{x}\times\rho \bm{a}dV
+\end{equation}
+into index notation:
+\begin{equation}
+    \int_{d\Omega_t}-\epsilon_{ijk}x_i\rho_w g x_3 \hat{n}_jdA+\int_{\Omega_t}\epsilon_{i3k}x_i(\frac{1}{2}+\frac{x_2+R}{2R})\rho_w g \hat{e}_3dV = \int_{\Omega_t}\epsilon_{ijk}x_ix_j\rho dV
+\end{equation}
+applying divergence thrm
+\begin{equation}
+    \int_{\Omega_t}-\epsilon_{ijk}x_i\frac{d}{dx_j}\rho_w g x_3 dV+\int_{\Omega_t}\epsilon_{i3k}x_i(\frac{1}{2}+\frac{x_2+R}{2R})\rho_w g \hat{e}_3dV = \int_{\Omega_t}\epsilon_{ijk}x_ix_j\rho dV
+\end{equation}
+beginning to evaluate our cross products
+\begin{equation}
+    \int_{\Omega_t}-\epsilon_{ijk}(\delta_{ij}x_3 +x_i\delta_{j3})\rho_w g  dV+\int_{\Omega_t}(x_2\hat{e}_1-x_1\hat{e}_2)(\frac{1}{2}+\frac{x_2+R}{2R})\rho_w g dV = \int_{\Omega_t}\epsilon_{ijk}x_ia_j\rho dV
+\end{equation}
+finishing those evaluations
+\begin{equation}
+    \int_{\Omega_t}-(x_2\hat{e}_1-x_1\hat{e}_2)\rho_w g  dV+\int_{\Omega_t}(x_2\hat{e}_1-x_1\hat{e}_2)(\frac{1}{2}+\frac{x_2+R}{2R})\rho_w g dV = \bm{M}
+\end{equation}
+integrating:
+\begin{equation}
+   -(x_1\frac{x_2^2}{2}x_3\hat{e}_1-\frac{x_1^2}{2}x_2x_3\hat{e}_2)\rho_w g  +(x_1\frac{x_2^2}{2}x_3\hat{e}_1-\frac{x_1^2}{2}x_2x_3\hat{e}_2)(\frac{1}{2}+\frac{x_2+R}{2R})\rho_w g = \bm{M}
+\end{equation}
+now organizing:
+\begin{equation}
+    \boxed{\bm{M} = \rho_w g(x_1\frac{x_2^2}{2}x_3(\frac{1}{2}+\frac{x_2+R}{2R})-x_1\frac{x_2^2}{2}x_3)\hat{e}_1+\rho_w g(\frac{x_1^2}{2}x_2x_3\hat{e}_2-\frac{x_1^2}{2}x_2x_3\hat{e}_2(\frac{1}{2}+\frac{x_2+R}{2R}))\hat{e}_2+(0)\hat{e}_3}
+\end{equation}
+Now, what conditions would this be in static equilibrium? First, the denser portion would need to be pointing in the direction of gravity (in this case, down). Second, there would need to be some sort of drag on the sphere as it rotated to this position, or else it would oscillate forever.
+
+\bigskip
+\subsection*{2--3. \textbf{Viscoelastic data} [4 pts].} 
+First, for part a, I say yes, this is a material that could be described with linear viscoelasticity for a subset of the regime shown. I would say that this assumption is valid as long the strain remains under 2$\times 10^{-3}$. this region is all straight lines, meaning the visco-elastic behavior is still linear.\\
+\medskip
+Now for part b, we first collect some data from our plots:
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c|c|c}
+        Time & 100kPa Strain& 250kPa Strain \\
+        2 & 4.5e-4 & 1.20e-3\\
+        5 & 5.4e-4 & 1.45e-3\\
+        10 & 6.6e-4 & 1.80e-3\\
+        20 & 8.1e-4& 2.40e-3\\
+        40 & 1e-3 & 3.00e-3\\
+    \end{tabular}
+    \caption{Data from given Isochrones}
+    \label{tab:placeholder}
+\end{table}
+now, assuming linear viscoelasticity:
+\begin{equation}
+    \varepsilon = \sigma_0J_{c}
+\end{equation}
+in this case we have two equations assuming this:
+\begin{equation}
+     \varepsilon_{100kPa} = 100J_{c,100kPa}
+\end{equation}
+\begin{equation}
+     \varepsilon_{250kPa} = 250 J_{c,250kPa}
+\end{equation}
+now, knowing that our creep relaxation function is purely a function of time, i use Matlabs curve fitting tool with a second order polynomial to find our creep relaxation functions (any higher begins to overfit in my opinion)
+\begin{equation}
+    \boxed{J_{c,100kPa} = -2.7801*10^{-7}t^2+ 2.5522*10^{-5}t+4.2193*10^{-4}}
+\end{equation}
+\begin{equation}
+    \boxed{J_{c,250kPa} = -8.9850*10^{-7}t^2+ 8.4144*10^{-5}t+.0011}
+\end{equation}
+
+
+\bigskip
+\subsection*{2--4. \textbf{Impulsive stresses} [4 pts].}
+First lets consider our general function for creep relaxation:
+\begin{equation}
+    \varepsilon(t) = \int_0^{\infty}J_c(t-\tau)\frac{d\sigma(\tau)}{d\tau}d\tau
+\end{equation}
+i don't know if you want it in Laplace space so here is both:
+\begin{equation}
+    \boxed{\varepsilon(t) = \int_0^{\infty}J_c(t-\tau)A\psi(\tau) d\tau}
+\end{equation}
+\begin{equation}
+    \boxed{\overline{\varepsilon}(s) = \overline{J}_c(s)As}
+\end{equation}
+
+Now we can use our arbitrary K-V creep relaxation function, as defined from the notes:
+\begin{equation}
+    \varepsilon(t) = \frac{\sigma(0^-)}{E}(1-e^{-Et/\eta})+\frac{1}{E}\int_{0^-}^{\infty}(1-e^{-\frac{E(t-\tau)}{\eta}})\frac{d\sigma(\tau)}{d\tau}d\tau
+\end{equation}
+subbing in our function, noting that the dirac delta is is infinite at 0.
+\begin{equation}
+    \varepsilon(t) = \frac{A\infty}{E}(1-e^{-Et/\eta})+\frac{1}{E}\int_{0^-}^{t}(1-e^{-\frac{E(t-\tau)}{\eta}})A\psi(\tau)d\tau
+\end{equation}
+taking Laplace transform:
+\begin{equation}
+ \varepsilon(s) =    \frac{A\infty}{E}(\frac{1}{s}-\frac{1}{s+\frac{E}{\eta}}) + \frac{A}{E+s\eta}
+\end{equation}
+and back into time domain:
+\begin{equation}
+    \boxed{\varepsilon(t)=\frac{A\infty}{E}(1-e^{-Et/\eta})+\frac{A e^{\frac{-Et}{\eta}}}{\eta}}
+\end{equation}
+Now, if we have the doublet function applied instead of the delta function: First, the general form:
+\begin{equation}
+    \varepsilon(t) = \int_0^{\infty}J_c(t-\tau)\frac{d\sigma(\tau)}{d\tau}d\tau
+\end{equation}
+\begin{equation}
+    \boxed{\varepsilon(t) = \int_0^{\infty}J_c(t-\tau)B\frac{d\psi(\tau)}{d\tau} d\tau}
+\end{equation}
+or in Laplace:
+\begin{equation}
+    \boxed{\overline{\varepsilon}(s) = \overline{J}_c(s)Bs^2}
+\end{equation}
+Now, lets do it for the K-V Model
+\begin{equation}
+    \varepsilon(t) = \frac{\sigma(0^-)}{E}(1-e^{-Et/\eta})+\frac{1}{E}\int_{0^-}^{\infty}(1-e^{-\frac{E(t-\tau)}{\eta}})\frac{d\sigma(\tau)}{d\tau}d\tau
+\end{equation}
+putting our function in:
+\begin{equation}
+    \varepsilon(t) = B\frac{\psi(0^-)}{E}(1-e^{-Et/\eta})+\frac{1}{E}\int_{0^-}^{\infty}(1-e^{-\frac{E(t-\tau)}{\eta}})B\frac{d\psi(\tau)}{d\tau}d\tau
+\end{equation}
+taking Laplace:
+\begin{equation}
+    \varepsilon(s)=\frac{B\psi(0)}{E}(\frac{1}{s}-\frac{1}{s+\frac{E}{\eta}})+\frac{1}{E}(Bs-B(s+\frac{E}{\eta})+\frac{B E^2}{(s+\frac{E}{\eta})\eta^2}+\frac{2BE}{\eta}-\frac{BE^2}{\eta(E+s\eta)})
+\end{equation}
+back into time:
+\begin{equation}
+    \boxed{\varepsilon(t)=\frac{B\psi(0)}{E}(1-e^{-Et/\eta})+\frac{B \delta(t)}{\eta}}
+\end{equation}
+
+\bigskip
+\subsection*{2--5. \textbf{Two-element models} [8 pts].}
+First, the constitutive law of a K-V material is:
+\begin{equation}
+    \sigma = \eta\dot{\varepsilon}+E\varepsilon
+\end{equation}
+Now, based on the given info, lets derive our strain function:
+\begin{equation}
+    \varepsilon(t)=\frac{\Delta h(t)}{h}
+\end{equation}
+where our change in height, assuming our strain starts at d:
+\begin{equation}
+    \Delta h(t) = d+d\sin(\omega t)
+\end{equation}
+from this:
+\begin{equation}
+    \varepsilon(0) = d/h
+\end{equation}
+\begin{equation}
+    \varepsilon(t) = \frac{d}{h}(1+\sin(\omega t))
+\end{equation}
+we can take a time derivative of this:
+\begin{equation}
+    \dot{\varepsilon}(t) = \frac{d}{h}\omega \cos(\omega t)
+\end{equation}
+\begin{equation}
+    \dot{\varepsilon}(0) = \frac{d}{h}\omega 
+\end{equation}
+plugging into our constitutive law:
+\begin{equation}
+    \boxed{\sigma = \eta\frac{d}{h}\omega \cos(\omega t)+E\frac{d}{h}(1+\sin(\omega t))}
+\end{equation}
+Next, to find our tangent loss, we can look at the slope of stress versus strain (like we are finding an actual tangent):
+\begin{equation}
+    \tan(\delta) = \frac{\sigma}{\varepsilon}
+\end{equation}
+\begin{equation}
+    \tan(\delta) = \frac{\eta\frac{d}{h}\omega \cos(\omega t)+E\frac{d}{h}(1+\sin(\omega t))}{\frac{d}{h}(1+\sin(\omega t))}
+\end{equation}
+simplifying
+\begin{equation}
+    \tan(\delta) = \frac{\eta\omega \cos(\omega t)+E(1+\sin(\omega t))}{(1+\sin(\omega t))}
+\end{equation}
+Can't simplify this any further so:
+\begin{equation}
+    \boxed{\tan(\delta) = \frac{E+\eta\omega \cos(\omega t)+E\sin(\omega t)}{1+\sin(\omega t)}}
+\end{equation}
+now, for a prescribed stress we can use the arbitrary stress equation:
+\begin{equation}
+    \varepsilon(t) = \frac{\sigma(0^-)}{E}(1-e^{-Et/\eta})+\frac{1}{E}\int_{0^-}^t (1-e^{-\frac{E(t-\tau)}{\eta}})\frac{d\sigma(\tau)}{d\tau}d\tau
+\end{equation}
+plugging in our function:
+\begin{equation}
+    \varepsilon(t) = \frac{\sigma_0}{E}(1-e^{-Et/\eta})+\frac{1}{E}\int_{0^-}^t (1-e^{-\frac{E(t-\tau)}{\eta}})\sigma_0\cos(\omega\tau)d\tau
+\end{equation}
+from here, solving in mathematica:
+\begin{equation}
+   \varepsilon(t)= \frac{E\sigma_0(e^{\frac{-Et}{\eta}}\eta \omega-\eta\omega\cos(\omega t)+E\sin(\omega t)}{e \omega(E^2 +\eta^2\omega^2)}
+\end{equation}
+taking Laplace Transform:
+\begin{equation}
+    \varepsilon(s) = \frac{\sigma_0}{E}(\frac{1}{s}-\frac{1}{s+\frac{E}{\eta}})+\frac{\sigma_0}{E}(\frac{s^2-\omega^2}{(s^2+\omega^2)^2}-\frac{s\eta}{E(s^2+\omega^2)}+\frac{(s+E/\eta)\eta}{E((s+E/\eta)^2+\omega^2})
+\end{equation}
+back into time:
+\begin{equation}
+    \varepsilon(t)=\frac{\sigma_0}{E}(1-e^{-Et/\eta})+\frac{\sigma_0}{E^2}e^{-Et/\eta}(Ete^{Et/\eta}+\eta-e^{Et/\eta})\cos(\omega t)
+\end{equation}
+simplifying
+\begin{equation}
+   \boxed{\varepsilon(t)=-\frac{\sigma_0}{E}(1-e^{-Et/\eta})+\frac{\sigma_0}{E^2}(Et-\eta e^{-Et/\eta}+\eta)\cos(\omega t)}
+\end{equation}
+Now finally, we first can find the tangent loss:
+\begin{equation}
+    \tan(\delta) = \frac{\sigma}{\varepsilon}
+\end{equation}
+\begin{equation}
+    \tan(\delta) = \frac{-\sigma_0-\sigma_0\sin(\omega t)}{\frac{\sigma_0}{E}(1-e^{-Et/\eta})+\frac{\sigma_0}{E^2}(Et-\eta e^{-Et/\eta}+\eta)\cos(\omega t)}
+\end{equation}
+so, setting this equivalent to the previous tangent loss:
+\begin{equation}
+     \frac{E+\eta\omega \cos(\omega t)+E\sin(\omega t)}{1+\sin(\omega t)}= \frac{-\sigma_0-\sigma_0\sin(\omega t)}{\frac{\sigma_0}{E}(1-e^{-Et/\eta})+\frac{\sigma_0}{E^2}(Et-\eta e^{-Et/\eta}+\eta)\cos(\omega t)}
+\end{equation}
+canceling some terms:
+\begin{equation}
+     \frac{1+\frac{\eta}{E}\omega \cos(\omega t)+\sin(\omega t)}{1+\sin(\omega t)}= \frac{-1-\sin(\omega t)}{(1-e^{-Et/\eta})+\frac{1}{E}(Et-\eta e^{-Et/\eta}+\eta)\cos(\omega t)}
+\end{equation}
+\begin{equation}
+     1+\frac{\eta}{E}\omega \cos(\omega t)+\sin(\omega t)= \frac{(-1-\sin(\omega t))(1+\sin(\omega t))}{(1-e^{-Et/\eta})+\frac{1}{E}(Et-\eta e^{-Et/\eta}+\eta)\cos(\omega t)}
+\end{equation}
+\begin{equation}
+     1+\frac{\eta}{E}\omega \cos(\omega t)+\sin(\omega t)= \frac{-1-2\sin(\omega t)-\sin^2(\omega t)}{(1-e^{-Et/\eta})+\frac{1}{E}(Et-\eta e^{-Et/\eta}+\eta)\cos(\omega t)}
+\end{equation}
+I personally could not get any further than this. I am curious where I went wrong. I assume its either in my understanding of the Tangent loss, or my Laplace Transforms. 
+
+
+
+
+
+
